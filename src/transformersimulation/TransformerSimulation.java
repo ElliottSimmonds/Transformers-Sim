@@ -9,7 +9,7 @@ import java.awt.Color;
 import java.util.ArrayList;
 import prins.simulator.Simulator;
 import prins.simulator.view.Gui;
-import transformersimulation.model.Cybertron;
+import transformersimulation.model.Planet;
 
 /**
  *
@@ -17,11 +17,11 @@ import transformersimulation.model.Cybertron;
  */
 public class TransformerSimulation extends Simulator {
 
-    private Cybertron cybertron;
+    private Planet cybertron;
     private Gui gui;
     
     public TransformerSimulation() {
-        cybertron = new Cybertron();
+        cybertron = new Planet();
         gui = new Gui(cybertron);
         
         populate();
