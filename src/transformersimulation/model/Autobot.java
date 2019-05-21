@@ -19,7 +19,8 @@ public class Autobot extends Agent {
         
     private List<Location> path;
     private double fitness;
-	private int size;
+    private double fitnessPenalty = 1;
+    private int size;
     
     public Autobot(Location location) {
         super(location);
@@ -27,6 +28,7 @@ public class Autobot extends Agent {
     }
     
     public void setFitness(double fitness) {
+        fitness = fitness * fitnessPenalty;
         this.fitness = fitness;
     }
     
@@ -71,11 +73,13 @@ public class Autobot extends Agent {
         
         // stops moving if hitting a obstacle
         if (cybertron.getAgent(new Location(nextLocation.getX(), nextLocation.getY())) != null && cybertron.getAgent(new Location(nextLocation.getX(), nextLocation.getY())).getClass().getSimpleName().contains("Obstacle")) {
+            fitnessPenalty = 0.5;
             return;
         } else {
             cybertron.setAgent(null, location);
             cybertron.setAgent(this, nextLocation);
         }
+
         location = nextLocation;
     }
     
