@@ -82,8 +82,56 @@ public class TransformerSimulation extends Simulator {
             autobot.setFitness(fitness);
             
             });
+			selection();
         }
         autobots.forEach(autobot -> autobot.act(cybertron));
     }
 
+    private void selection() {
+        List<Autobot> genePool = generateGenePool();
+        autobots.clear();
+        cybertron.clear();
+        
+        resources = new Resource(new Location(15,2));
+        cybertron.setAgent(resources, resources.getLocation());
+        
+        for (int i=0; i < TransformerConfig.MAX_TRANSFORMERS; i++) {
+            Autobot parent = genePool.get(TransformerConfig.random.nextInt(genePool.size()));
+            
+            Autobot baby = reproduce(parent);
+            autobots.add(baby);
+            cybertron.setAgent(baby, baby.getLocation());
+        }
+        System.out.println("Babies created");
+    }
+
+    private Autobot reproduce(Autobot parent) {
+        Autobot baby = new Autobot(new Location(2,15));
+        
+        List<Location> parentPath = parent.getPath();
+        List<Location> babyPath = new ArrayList<Location>();
+
+        babyPath.add(parentPath.get(0));
+        for (int i=1; i < parentPath.size(); i++) {
+            int babyX = parentPath.get(i).getX() - parentPath.get(i-1).getX();
+            int babyY = parentPath.get(i).getY() - parentPath.get(i-1).getY();
+			
+			babyPath.add(new Location(babyX, babyY));
+            
+        }
+        baby.setPath(babyPath);
+        return baby;
+    }
+    
+    private List<Autobot> generateGenePool() {
+        List<Autobot> genePool = new ArrayList<Autobot>();
+        autobots.forEach(autobot -> {
+            int numAutobots = (int)((autobot.getFitness()*10) * TransformerConfig.MAX_TRANSFORMERS);
+            for (int i=0; i < numAutobots; i++) {
+                genePool.add(autobot.cloneTransformer());
+            }
+        } );
+        return genePool;
+    }
+    
 }

@@ -66,4 +66,11 @@ public class Autobot extends Agent {
         location = nextLocation;
     }
     
+    public Autobot cloneTransformer() {
+        Autobot newBot = new Autobot(this.location);
+        newBot.setPath(this.getPath());
+        newBot.setSize(this.getSize());
+        return newBot;
+    }
+    
 }
