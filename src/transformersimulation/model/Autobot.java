@@ -73,13 +73,13 @@ public class Autobot extends Agent {
         
         // stops moving if hitting a obstacle
         if (cybertron.getAgent(new Location(nextLocation.getX(), nextLocation.getY())) != null && cybertron.getAgent(new Location(nextLocation.getX(), nextLocation.getY())).getClass().getSimpleName().contains("Obstacle")) {
-            fitnessPenalty = 0.5;
+            fitnessPenalty = 0.5; // if the autobot hits an obstacle, it's fitness is halfed
             return;
         } else {
             cybertron.setAgent(null, location);
             cybertron.setAgent(this, nextLocation);
         }
-
+        
         location = nextLocation;
     }
     
