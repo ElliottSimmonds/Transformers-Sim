@@ -42,6 +42,8 @@ public class TransformerSimulation extends Simulator {
         autobots = new ArrayList<>();
         for (int i=0; i < TransformerConfig.MAX_TRANSFORMERS; i++) {
             Autobot autobot = new Autobot(new Location(5,15));
+            int randSize = TransformerConfig.random.nextInt(5) + 1;  // 1 is added so it ranges from 1-5 rather than 0-4
+            autobot.setSize(randSize);
             autobot.generatePath(cybertron);
             autobots.add(autobot);
         }
@@ -82,9 +84,15 @@ public class TransformerSimulation extends Simulator {
             autobot.setFitness(fitness);
             
             });
-			selection();
+            selection();
         }
-        autobots.forEach(autobot -> autobot.act(cybertron));
+         autobots.forEach(autobot -> {
+            if (step != 0) {
+                if (step % autobot.getSize() == 0) {
+                    autobot.act(cybertron);
+                }
+            }
+        });
     }
 
     private void selection() {
@@ -111,6 +119,7 @@ public class TransformerSimulation extends Simulator {
         List<Location> parentPath = parent.getPath();
         List<Location> babyPath = new ArrayList<Location>();
 
+		baby.setSize(parent.getSize()); // inherits size from parent
         babyPath.add(parentPath.get(0));
         for (int i=1; i < parentPath.size(); i++) {
             int parentDirectionX = parentPath.get(i).getX() - parentPath.get(i-1).getX();
@@ -132,7 +141,7 @@ public class TransformerSimulation extends Simulator {
                 babyX = babyPath.get(babyPath.size()-1).getX() + parentDirectionX;
                 babyY = babyPath.get(babyPath.size()-1).getY() + parentDirectionY;
             }
-			
+
             // prevents the path going out of bounds
             if (babyX >= 30) {
                 babyX = 29;

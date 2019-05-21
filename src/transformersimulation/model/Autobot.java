@@ -19,6 +19,7 @@ public class Autobot extends Agent {
         
     private List<Location> path;
     private double fitness;
+	private int size;
     
     public Autobot(Location location) {
         super(location);
@@ -31,6 +32,14 @@ public class Autobot extends Agent {
     
     public double getFitness() {
         return fitness;
+    }
+	
+	public void setSize(int size) {
+        this.size = size;
+    }
+    
+    public int getSize() {
+        return this.size;
     }
     
     public void generatePath(Planet cybertron) {
