@@ -39,16 +39,30 @@ public class TransformerSimulation extends Simulator {
     }
     
     private void populate() {
-        resources = new Resource(new Location(15,2));
+        resources = new Resource(new Location(23,20));
         cybertron.setAgent(resources, resources.getLocation());
         
-        for (int i=10; i < 15; i++) {
+        resources = new Resource(new Location(15,3));
+        cybertron.setAgent(resources, resources.getLocation());
+        
+        for (int i=0; i < 10; i++) {
             obstacles = new Obstacle(new Location(10,i));
             cybertron.setAgent(obstacles, obstacles.getLocation());
         }
+        
+        for (int i=10; i < 14; i++) {
+            obstacles = new Obstacle(new Location(i,10));
+            cybertron.setAgent(obstacles, obstacles.getLocation());
+        }
+        
+        for (int i=20; i < 30; i++) {
+            obstacles = new Obstacle(new Location(15,i));
+            cybertron.setAgent(obstacles, obstacles.getLocation());
+        }
+        
         autobots = new ArrayList<>();
         for (int i=0; i < TransformerConfig.MAX_TRANSFORMERS; i++) {
-            Autobot autobot = new Autobot(new Location(5,15));
+            Autobot autobot = new Autobot(new Location(2,15));
             int randSize = TransformerConfig.random.nextInt(5) + 1;  // 1 is added so it ranges from 1-5 rather than 0-4
             autobot.setSize(randSize);
             autobot.generatePath(cybertron);
@@ -107,13 +121,27 @@ public class TransformerSimulation extends Simulator {
         autobots.clear();
         cybertron.clear();
         
-        resources = new Resource(new Location(15,2));
+        resources = new Resource(new Location(23,20));
         cybertron.setAgent(resources, resources.getLocation());
         
-        for (int i=10; i < 15; i++) {
+        resources = new Resource(new Location(15,3));
+        cybertron.setAgent(resources, resources.getLocation());
+        
+        for (int i=0; i < 10; i++) {
             obstacles = new Obstacle(new Location(10,i));
             cybertron.setAgent(obstacles, obstacles.getLocation());
         }
+        
+        for (int i=10; i < 14; i++) {
+            obstacles = new Obstacle(new Location(i,10));
+            cybertron.setAgent(obstacles, obstacles.getLocation());
+        }
+        
+        for (int i=20; i < 30; i++) {
+            obstacles = new Obstacle(new Location(15,i));
+            cybertron.setAgent(obstacles, obstacles.getLocation());
+        }
+        
         for (int i=0; i < TransformerConfig.MAX_TRANSFORMERS; i++) {
             Autobot parent = genePool.get(TransformerConfig.random.nextInt(genePool.size()));
             
