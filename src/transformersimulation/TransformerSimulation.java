@@ -132,6 +132,7 @@ public class TransformerSimulation extends Simulator {
                 babyX = babyPath.get(babyPath.size()-1).getX() + parentDirectionX;
                 babyY = babyPath.get(babyPath.size()-1).getY() + parentDirectionY;
             }
+			
             // prevents the path going out of bounds
             if (babyX >= 30) {
                 babyX = 29;
@@ -144,6 +145,13 @@ public class TransformerSimulation extends Simulator {
             }
             if (babyY < 0) {
                 babyY = 0;
+            }
+			
+			// prevents the robot from moving over the target
+            if (babyX == resources.getLocation().getX() && babyY == resources.getLocation().getY()) {
+                babyPath.add(babyPath.get(babyPath.size()-1));
+            } else {
+                babyPath.add(new Location(babyX, babyY));
             }
             
         }
