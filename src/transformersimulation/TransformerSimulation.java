@@ -13,6 +13,7 @@ import prins.simulator.model.Location;
 import prins.simulator.view.Gui;
 import transformersimulation.model.Autobot;
 import transformersimulation.model.Planet;
+import transformersimulation.model.Resource;
 
 /**
  *
