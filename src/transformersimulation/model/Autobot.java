@@ -33,8 +33,8 @@ public class Autobot extends Agent {
     public double getFitness() {
         return fitness;
     }
-	
-	public void setSize(int size) {
+    
+    public void setSize(int size) {
         this.size = size;
     }
     
@@ -69,9 +69,13 @@ public class Autobot extends Agent {
             nextLocation = path.get(path.indexOf(location)+1);
         }
         
-        cybertron.setAgent(null, location);
-        cybertron.setAgent(this, nextLocation);
-        
+        // stops moving if hitting a obstacle
+        if (cybertron.getAgent(new Location(nextLocation.getX(), nextLocation.getY())) != null && cybertron.getAgent(new Location(nextLocation.getX(), nextLocation.getY())).getClass().getSimpleName().contains("Obstacle")) {
+            return;
+        } else {
+            cybertron.setAgent(null, location);
+            cybertron.setAgent(this, nextLocation);
+        }
         location = nextLocation;
     }
     

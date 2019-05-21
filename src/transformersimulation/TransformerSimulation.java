@@ -14,6 +14,7 @@ import prins.simulator.view.Gui;
 import transformersimulation.model.Autobot;
 import transformersimulation.model.Planet;
 import transformersimulation.model.Resource;
+import transformersimulation.model.Obstacle;
 
 /**
  *
@@ -25,12 +26,14 @@ public class TransformerSimulation extends Simulator {
     private Gui gui;
     private List<Autobot> autobots;
     Resource resources;
+    Obstacle obstacles;
     
     public TransformerSimulation() {
         cybertron = new Planet();
         gui = new Gui(cybertron);
         gui.registerAgentColors(Autobot.class, Color.blue);
         gui.registerAgentColors(Resource.class, Color.orange);
+        gui.registerAgentColors(Obstacle.class, Color.red);
         
         populate();
     }
@@ -39,6 +42,10 @@ public class TransformerSimulation extends Simulator {
         resources = new Resource(new Location(15,2));
         cybertron.setAgent(resources, resources.getLocation());
         
+        for (int i=10; i < 15; i++) {
+            obstacles = new Obstacle(new Location(10,i));
+            cybertron.setAgent(obstacles, obstacles.getLocation());
+        }
         autobots = new ArrayList<>();
         for (int i=0; i < TransformerConfig.MAX_TRANSFORMERS; i++) {
             Autobot autobot = new Autobot(new Location(5,15));
@@ -103,6 +110,10 @@ public class TransformerSimulation extends Simulator {
         resources = new Resource(new Location(15,2));
         cybertron.setAgent(resources, resources.getLocation());
         
+        for (int i=10; i < 15; i++) {
+            obstacles = new Obstacle(new Location(10,i));
+            cybertron.setAgent(obstacles, obstacles.getLocation());
+        }
         for (int i=0; i < TransformerConfig.MAX_TRANSFORMERS; i++) {
             Autobot parent = genePool.get(TransformerConfig.random.nextInt(genePool.size()));
             
