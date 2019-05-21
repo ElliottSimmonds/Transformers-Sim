@@ -39,27 +39,8 @@ public class TransformerSimulation extends Simulator {
     }
     
     private void populate() {
-        resources = new Resource(new Location(23,20));
-        cybertron.setAgent(resources, resources.getLocation());
-        
-        resources = new Resource(new Location(15,3));
-        cybertron.setAgent(resources, resources.getLocation());
-        
-        for (int i=0; i < 10; i++) {
-            obstacles = new Obstacle(new Location(10,i));
-            cybertron.setAgent(obstacles, obstacles.getLocation());
-        }
-        
-        for (int i=10; i < 14; i++) {
-            obstacles = new Obstacle(new Location(i,10));
-            cybertron.setAgent(obstacles, obstacles.getLocation());
-        }
-        
-        for (int i=20; i < 30; i++) {
-            obstacles = new Obstacle(new Location(15,i));
-            cybertron.setAgent(obstacles, obstacles.getLocation());
-        }
-        
+        loadArea();
+       
         autobots = new ArrayList<>();
         for (int i=0; i < TransformerConfig.MAX_TRANSFORMERS; i++) {
             Autobot autobot = new Autobot(new Location(2,15));
@@ -67,6 +48,30 @@ public class TransformerSimulation extends Simulator {
             autobot.setSize(randSize);
             autobot.generatePath(cybertron);
             autobots.add(autobot);
+        }
+    }
+    
+    private void loadArea() {
+        // generates obstacles and resources
+        resources = new Resource(new Location(23,22));
+        cybertron.setAgent(resources, resources.getLocation());
+        
+        resources = new Resource(new Location(15,3));
+        cybertron.setAgent(resources, resources.getLocation());
+
+        for (int i=0; i < 7; i++) {
+            obstacles = new Obstacle(new Location(10,i));
+            cybertron.setAgent(obstacles, obstacles.getLocation());
+        }
+        
+        for (int i=10; i < 14; i++) {
+            obstacles = new Obstacle(new Location(i,7));
+            cybertron.setAgent(obstacles, obstacles.getLocation());
+        }
+        
+        for (int i=20; i < 30; i++) {
+            obstacles = new Obstacle(new Location(15,i));
+            cybertron.setAgent(obstacles, obstacles.getLocation());
         }
     }
     
@@ -121,26 +126,7 @@ public class TransformerSimulation extends Simulator {
         autobots.clear();
         cybertron.clear();
         
-        resources = new Resource(new Location(23,20));
-        cybertron.setAgent(resources, resources.getLocation());
-        
-        resources = new Resource(new Location(15,3));
-        cybertron.setAgent(resources, resources.getLocation());
-        
-        for (int i=0; i < 10; i++) {
-            obstacles = new Obstacle(new Location(10,i));
-            cybertron.setAgent(obstacles, obstacles.getLocation());
-        }
-        
-        for (int i=10; i < 14; i++) {
-            obstacles = new Obstacle(new Location(i,10));
-            cybertron.setAgent(obstacles, obstacles.getLocation());
-        }
-        
-        for (int i=20; i < 30; i++) {
-            obstacles = new Obstacle(new Location(15,i));
-            cybertron.setAgent(obstacles, obstacles.getLocation());
-        }
+        loadArea();
         
         for (int i=0; i < TransformerConfig.MAX_TRANSFORMERS; i++) {
             Autobot parent = genePool.get(TransformerConfig.random.nextInt(genePool.size()));
@@ -160,19 +146,6 @@ public class TransformerSimulation extends Simulator {
         List<Location> babyPath = new ArrayList<Location>();
         
         baby.setSize(parent.getSize()); // inherits size from parent
-        
-        // size mutation
-        int randSize = TransformerConfig.random.nextInt(100);
-        if (randSize < 5) { // randomly increases or decreases size by one
-            baby.setSize(baby.getSize() -1);
-        } else if (randSize < 10) {
-            baby.setSize(baby.getSize() +1);
-        }
-        if (baby.getSize() > 5) { // ensures size value is between limits
-            baby.setSize(5);
-        } else if (baby.getSize() < 1) {
-            baby.setSize(1);
-        }
         
         babyPath.add(parentPath.get(0));
         for (int i=1; i < parentPath.size(); i++) {
