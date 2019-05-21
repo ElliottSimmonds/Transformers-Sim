@@ -86,7 +86,7 @@ public class TransformerSimulation extends Simulator {
             });
             selection();
         }
-         autobots.forEach(autobot -> {
+        autobots.forEach(autobot -> {
             if (step != 0) {
                 if (step % autobot.getSize() == 0) {
                     autobot.act(cybertron);
@@ -111,6 +111,7 @@ public class TransformerSimulation extends Simulator {
             cybertron.setAgent(baby, baby.getLocation());
         }
         System.out.println("Babies created");
+        step = 0;
     }
 
     private Autobot reproduce(Autobot parent) {
@@ -118,15 +119,29 @@ public class TransformerSimulation extends Simulator {
         
         List<Location> parentPath = parent.getPath();
         List<Location> babyPath = new ArrayList<Location>();
-
-		baby.setSize(parent.getSize()); // inherits size from parent
+        
+        baby.setSize(parent.getSize()); // inherits size from parent
+        
+        // size mutation
+        int randSize = TransformerConfig.random.nextInt(100);
+        if (randSize < 5) { // randomly increases or decreases size by one
+            baby.setSize(baby.getSize() -1);
+        } else if (randSize < 10) {
+            baby.setSize(baby.getSize() +1);
+        }
+        if (baby.getSize() > 5) { // ensures size value is between limits
+            baby.setSize(5);
+        } else if (baby.getSize() < 1) {
+            baby.setSize(1);
+        }
+        
         babyPath.add(parentPath.get(0));
         for (int i=1; i < parentPath.size(); i++) {
             int parentDirectionX = parentPath.get(i).getX() - parentPath.get(i-1).getX();
             int parentDirectionY = parentPath.get(i).getY() - parentPath.get(i-1).getY();
             int babyX;
             int babyY;
-			
+            
             // path mutation. can occur on each path step.
             int randInt = TransformerConfig.random.nextInt(100);
             if (randInt < 5) {
