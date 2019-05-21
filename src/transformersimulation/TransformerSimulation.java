@@ -113,10 +113,38 @@ public class TransformerSimulation extends Simulator {
 
         babyPath.add(parentPath.get(0));
         for (int i=1; i < parentPath.size(); i++) {
-            int babyX = parentPath.get(i).getX() - parentPath.get(i-1).getX();
-            int babyY = parentPath.get(i).getY() - parentPath.get(i-1).getY();
+            int parentDirectionX = parentPath.get(i).getX() - parentPath.get(i-1).getX();
+            int parentDirectionY = parentPath.get(i).getY() - parentPath.get(i-1).getY();
+            int babyX;
+            int babyY;
 			
-			babyPath.add(new Location(babyX, babyY));
+            // path mutation. can occur on each path step.
+            int randInt = TransformerConfig.random.nextInt(100);
+            if (randInt < 5) {
+                // moves in random direction
+                int randIntX = (int)Math.round((Math.random() * 2) -1);
+                int randIntY = (int)Math.round((Math.random() * 2) -1);
+                babyX = babyPath.get(babyPath.size()-1).getX() + randIntX;
+                babyY = babyPath.get(babyPath.size()-1).getY() + randIntY;
+                
+            } else {
+                // moves in the same direction as parent
+                babyX = babyPath.get(babyPath.size()-1).getX() + parentDirectionX;
+                babyY = babyPath.get(babyPath.size()-1).getY() + parentDirectionY;
+            }
+            // prevents the path going out of bounds
+            if (babyX >= 30) {
+                babyX = 29;
+            }
+            if (babyX < 0) {
+                babyX = 0;
+            }
+            if (babyY >= 30) {
+                babyY = 29;
+            }
+            if (babyY < 0) {
+                babyY = 0;
+            }
             
         }
         baby.setPath(babyPath);
