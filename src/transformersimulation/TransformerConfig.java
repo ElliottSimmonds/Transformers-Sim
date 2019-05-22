@@ -13,6 +13,6 @@ import java.util.Random;
  */
 public class TransformerConfig {
     public static Random random = new Random();
-    public static int MAX_TRANSFORMERS = 500;
-    public static int MAX_PATH = 40;
+    public static int MAX_TRANSFORMERS = 250;
+    public static int MAX_PATH = 41;
 }
