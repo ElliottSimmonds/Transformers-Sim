@@ -27,6 +27,7 @@ public class TransformerSimulation extends Simulator {
     private List<Autobot> autobots;
     Resource resources;
     Obstacle obstacles;
+    private int counter;
     
     public TransformerSimulation() {
         cybertron = new Planet();
@@ -113,10 +114,8 @@ public class TransformerSimulation extends Simulator {
             selection();
         }
         autobots.forEach(autobot -> {
-            if (step != 0) {
-                if (step % autobot.getSize() == 0) {
-                    autobot.act(cybertron);
-                }
+            if (step != 0 && step % autobot.getSize() == 0) {
+                autobot.act(cybertron);
             }
         });
     }
@@ -135,7 +134,8 @@ public class TransformerSimulation extends Simulator {
             autobots.add(baby);
             cybertron.setAgent(baby, baby.getLocation());
         }
-        System.out.println("Babies created");
+        counter = counter + 1;
+        System.out.println("Generation "+counter);
         step = 0;
     }
 
