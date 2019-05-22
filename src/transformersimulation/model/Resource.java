@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package transformersimulation;
+package transformersimulation.model;
 
 import prins.simulator.model.Agent;
 import prins.simulator.model.Location;
