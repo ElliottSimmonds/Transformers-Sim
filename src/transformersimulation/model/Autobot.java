@@ -72,15 +72,17 @@ public class Autobot extends Agent {
         }
         
         // stops moving if hitting a obstacle
-        if (cybertron.getAgent(new Location(nextLocation.getX(), nextLocation.getY())) != null && cybertron.getAgent(new Location(nextLocation.getX(), nextLocation.getY())).getClass().getSimpleName().contains("Obstacle")) {
-            fitnessPenalty = 0.5; // if the autobot hits an obstacle, it's fitness is halfed
-            return;
+        if (cybertron.getAgent(nextLocation) instanceof Obstacle) {
+            fitnessPenalty = 0.5; // if the autobot hits an obstacle, it's fitness is halved
+            cybertron.setAgent(this, location); // Location doesn't change
+        } else if (cybertron.getAgent(nextLocation) instanceof Resource) {
+            cybertron.setAgent(this, location); // Location doesn't change
         } else {
+            // Updates location to next in list
             cybertron.setAgent(null, location);
             cybertron.setAgent(this, nextLocation);
+            location = nextLocation;
         }
-        
-        location = nextLocation;
     }
     
     public Autobot cloneTransformer() {

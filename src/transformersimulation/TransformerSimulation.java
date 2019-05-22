@@ -183,12 +183,7 @@ public class TransformerSimulation extends Simulator {
                 babyY = 0;
             }
 			
-			// prevents the robot from moving over the target
-            if (babyX == resources.getLocation().getX() && babyY == resources.getLocation().getY()) {
-                babyPath.add(babyPath.get(babyPath.size()-1));
-            } else {
-                babyPath.add(new Location(babyX, babyY));
-            }
+            babyPath.add(new Location(babyX, babyY));
             
         }
         baby.setPath(babyPath);
