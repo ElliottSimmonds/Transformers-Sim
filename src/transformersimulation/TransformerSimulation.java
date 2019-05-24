@@ -25,7 +25,7 @@ public class TransformerSimulation extends Simulator {
     private Planet cybertron;
     private Gui gui;
     private List<Autobot> autobots;
-	private List<Resource> resources;
+    private List<Resource> resources;
     Obstacle obstacles;
     private int counter;
     
@@ -55,11 +55,11 @@ public class TransformerSimulation extends Simulator {
     private void loadArea() {
         // generates obstacles and resources
 		
-		resources = new ArrayList<>();
-		
-		Resource resource = new Resource(new Location(23,22));
-		resources.add(resource);
-		cybertron.setAgent(resource, resources.getLocation());
+	resources = new ArrayList<>();
+
+	Resource resource = new Resource(new Location(23,22));
+	resources.add(resource);
+	cybertron.setAgent(resource, resources.getLocation());
 
         Resource resource = new Resource(new Location(15,3));
 		resources.add(resource);
@@ -105,21 +105,21 @@ public class TransformerSimulation extends Simulator {
             
             int autobotX = autobot.getLocation().getX();
             int autobotY = autobot.getLocation().getY();
-			double fitness = 0;
-			
-			resources.forEach(resource -> {
-				int targetX = resource.getLocation().getX();
-				int targetY = resource.getLocation().getY();
-				
-				double differenceX = Math.abs(targetX - autobotX);
-				double differenceY = Math.abs(targetY - autobotY);
-				double difference = Math.sqrt(Math.pow(differenceX,2) + Math.pow(differenceY,2));
-				double newFitness = 1 / difference;
-				
-				if (newFitness > fitness) {
-					fitness = newFitness;
-				};
-			});
+	    double fitness = 0;
+
+	    resources.forEach(resource -> {
+		int targetX = resource.getLocation().getX();
+		int targetY = resource.getLocation().getY();
+
+		double differenceX = Math.abs(targetX - autobotX);
+		double differenceY = Math.abs(targetY - autobotY);
+		double difference = Math.sqrt(Math.pow(differenceX,2) + Math.pow(differenceY,2));
+		double newFitness = 1 / difference;
+
+		if (newFitness > fitness) {
+			fitness = newFitness;
+		};
+	    });
             
             autobot.setFitness(fitness);
             
