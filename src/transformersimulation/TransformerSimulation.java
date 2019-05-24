@@ -106,7 +106,8 @@ public class TransformerSimulation extends Simulator {
 
                 int autobotX = autobot.getLocation().getX();
                 int autobotY = autobot.getLocation().getY();
-
+                
+                fitness = autobot.getFitness();
 
                 resources.forEach(resource -> {
                     int targetX = resource.getLocation().getX();
