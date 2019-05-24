@@ -25,7 +25,7 @@ public class TransformerSimulation extends Simulator {
     private Planet cybertron;
     private Gui gui;
     private List<Autobot> autobots;
-    Resource resources;
+	private List<Resource> resources;
     Obstacle obstacles;
     private int counter;
     
@@ -54,10 +54,15 @@ public class TransformerSimulation extends Simulator {
     
     private void loadArea() {
         // generates obstacles and resources
-        resources = new Resource(new Location(23,22));
-        cybertron.setAgent(resources, resources.getLocation());
-        
-        resources = new Resource(new Location(15,3));
+		
+		resources = new ArrayList<>();
+		
+		Resource resource = new Resource(new Location(23,22));
+		resources.add(resource);
+		cybertron.setAgent(resource, resources.getLocation());
+
+        Resource resource = new Resource(new Location(15,3));
+		resources.add(resource);
         cybertron.setAgent(resources, resources.getLocation());
 
         for (int i=0; i < 7; i++) {
@@ -98,15 +103,23 @@ public class TransformerSimulation extends Simulator {
             //work out fitness
             autobots.forEach(autobot -> {
             
-            int rocketX = autobot.getLocation().getX();
-            int rocketY = autobot.getLocation().getY();
-            int targetX = resources.getLocation().getX();
-            int targetY = resources.getLocation().getY();
-            
-            double differenceX = Math.abs(targetX - rocketX);
-            double differenceY = Math.abs(targetY - rocketY);
-            double difference = Math.sqrt(Math.pow(differenceX,2) + Math.pow(differenceY,2));
-            double fitness = 1 / difference;
+            int autobotX = autobot.getLocation().getX();
+            int autobotY = autobot.getLocation().getY();
+			double fitness = 0;
+			
+			resources.forEach(resource -> {
+				int targetX = resource.getLocation().getX();
+				int targetY = resource.getLocation().getY();
+				
+				double differenceX = Math.abs(targetX - autobotX);
+				double differenceY = Math.abs(targetY - autobotY);
+				double difference = Math.sqrt(Math.pow(differenceX,2) + Math.pow(differenceY,2));
+				double newFitness = 1 / difference;
+				
+				if (newFitness > fitness) {
+					fitness = newFitness;
+				};
+			});
             
             autobot.setFitness(fitness);
             
